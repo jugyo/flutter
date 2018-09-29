@@ -214,10 +214,16 @@ class IosProject {
   /// The product bundle identifier of the host app, or null if not set or if
   /// iOS tooling needed to read it is not installed.
   String get productBundleIdentifier {
+    print(hostInfoPlist.path);
+    print(plist.kCFBundleIdentifierKey);
+    print(buildSettings);
     final String fromPlist = iosWorkflow.getPlistValueFromFile(
       hostInfoPlist.path,
       plist.kCFBundleIdentifierKey,
     );
+    print(fromPlist);
+    print(xcode.substituteXcodeVariables(fromPlist, buildSettings));
+    print("foo");
     if (fromPlist != null && !fromPlist.contains('\$')) {
       // Info.plist has no build variables in product bundle ID.
       return fromPlist;

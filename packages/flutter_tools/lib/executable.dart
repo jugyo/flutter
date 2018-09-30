@@ -22,6 +22,7 @@ import 'src/commands/fuchsia_reload.dart';
 import 'src/commands/ide_config.dart';
 import 'src/commands/inject_plugins.dart';
 import 'src/commands/install.dart';
+import 'src/commands/launch.dart';
 import 'src/commands/logs.dart';
 import 'src/commands/make_host_app_editable.dart';
 import 'src/commands/packages.dart';
@@ -67,6 +68,7 @@ Future<Null> main(List<String> args) async {
     IdeConfigCommand(hidden: !verboseHelp),
     InjectPluginsCommand(hidden: !verboseHelp),
     InstallCommand(),
+    LaunchCommand(),
     LogsCommand(),
     MakeHostAppEditableCommand(),
     PackagesCommand(),

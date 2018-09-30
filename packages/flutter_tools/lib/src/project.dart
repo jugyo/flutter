@@ -148,7 +148,7 @@ class FlutterProject {
 /// Instances will reflect the contents of the `ios/` sub-folder of
 /// Flutter applications and the `.ios/` sub-folder of Flutter modules.
 class IosProject {
-  static final RegExp _productBundleIdPattern = RegExp(r'^\s*PRODUCT_BUNDLE_IDENTIFIER\s*=\s*(.*);\s*$');
+  static final RegExp _productBundleIdPattern = RegExp(r'^\s*PRODUCT_BUNDLE_IDENTIFIER\s*=\s*"?(.*?)"?;\s*$');
   static const String _productBundleIdVariable = r'$(PRODUCT_BUNDLE_IDENTIFIER)';
   static const String _hostAppBundleName = 'Runner';
 
@@ -219,15 +219,20 @@ class IosProject {
       plist.kCFBundleIdentifierKey,
     );
     if (fromPlist != null && !fromPlist.contains('\$')) {
+      print("1 $fromPlist");
       // Info.plist has no build variables in product bundle ID.
       return fromPlist;
     }
     final String fromPbxproj = _firstMatchInFile(xcodeProjectInfoFile, _productBundleIdPattern)?.group(1);
     if (fromPbxproj != null && (fromPlist == null || fromPlist == _productBundleIdVariable)) {
+      print("xcodeProjectInfoFile $xcodeProjectInfoFile");
+      print("_productBundleIdPattern $_productBundleIdPattern");
+      print("2 $fromPbxproj");
       // Common case. Avoids parsing build settings.
       return fromPbxproj;
     }
     if (fromPlist != null && xcode.xcodeProjectInterpreter.isInstalled) {
+      print("3 ${xcode.substituteXcodeVariables(fromPlist, buildSettings)}");
       // General case: perform variable substitution using build settings.
       return xcode.substituteXcodeVariables(fromPlist, buildSettings);
     }

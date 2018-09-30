@@ -274,7 +274,7 @@ class FlutterDevice {
 
     final Map<String, dynamic> platformArgs = <String, dynamic>{};
 
-    startEchoingDeviceLog();
+    // startEchoingDeviceLog();
 
     // Start the application.
     final bool hasDirtyDependencies = hotRunner.hasDirtyDependencies(this);
